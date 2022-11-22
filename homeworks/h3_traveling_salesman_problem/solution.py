@@ -24,7 +24,6 @@ def distance_gene(gene):
     result = 0
     prev = gene[0]
     for current in gene[1:]:
-        # print(coordinates[i-1], coordinates[i], distance(coordinates[i-1], coordinates[i]))
         result += distance(coordinates[prev], coordinates[current])
         prev = current
     return result
@@ -45,7 +44,6 @@ def sort_genes(genes):
     return sorted(genes, key=lambda x: distance_gene(x))
 
 def one_point_cross(first, second):
-    # print(first, second)
     first_crossed = []
     second_crossed = []
     ind = random.randint(0, len(first) - 1)
@@ -69,7 +67,6 @@ def reproduce(parents):
     result = []
     for first, second in zip(parents[0::2], parents[1::2]):
         result.extend(one_point_cross(first, second))
-    # print("-----------------------------------------------------")
     if len(parents) % 2 != 0:
         result.append(parents[-1])
     return result
@@ -115,28 +112,18 @@ def genetic_algorithm(first_population):
     iteration = 1
     parents = first_population
     while iteration < 5001:
-        # print("ITERATION: ", iteration)
-        # print("PARENTS: ", parents)
         best_parents = sort_genes(parents)[0:int(len(parents)/2)]
-        # print("BEST PARENTS: ", best_parents)
         if iteration == 1 or iteration == 10 or iteration == 100 or iteration == 500 or iteration == 1000 or iteration == 5000:
             print("Best on iteration number ", iteration, " : ", distance_gene(best_parents[0]))
         children = reproduce(best_parents)
-        # print("CHILDREN: ", children)
         children = mutate(children)
-        # print("MUTATED CHILDREN: ", children)
-        # best_children = sort_genes(best_children)[0:len(children)/2]
         parents = best_parents + children
         iteration += 1
 
 def main():
     read_input()
     first_population = init_first_population()
-    # for gene in first_population:
-    #    print(gene, distance_gene(gene))
-    # print(sort_genes(first_population))
     genetic_algorithm(first_population)
-    # print(mutate_insert([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
 
 if __name__ == "__main__":
     main()
