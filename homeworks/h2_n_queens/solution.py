@@ -81,9 +81,14 @@ def initialize_board():
         queens[col] = min_row
         increment_conflicts(col, min_row)
 
+def all_conflicts():
+    conflicts = 0
+    for col in range(N):
+        conflicts += calculate_conflics(col, queens[col], False)
+    return conflicts
 
 def has_conflicts():
-    return num_current_conflicts != 0
+    return all_conflicts() != 0
 
 def get_col_with_queen_with_max_conflicts(last_move_col):
     conflits = []
